@@ -21,13 +21,13 @@ export default function AuthPage() {
       <div className="flex flex-col md:flex-row w-full">
         {/* Left column - Form */}
         <div className="w-full md:w-1/2 p-6 flex items-center justify-center">
-          <Card className="w-full max-w-md">
+          <Card className="w-full max-w-xl">
             <CardContent className="pt-6">
               <div className="mb-6 text-center">
                 <img 
                   src="/src/assets/telem-logo.png"
                   alt={t("app.name")} 
-                  className="h-40 mx-auto mb-6" 
+                  className="h-56 mx-auto mb-6 max-w-full" 
                 />
                 <h1 className="text-xl font-bold">{t("app.subtitle")}</h1>
               </div>
