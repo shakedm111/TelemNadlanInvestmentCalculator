@@ -27,7 +27,7 @@ export default function AuthPage() {
                 <img 
                   src="/src/assets/telem-logo.png"
                   alt={t("app.name")} 
-                  className="h-24 mx-auto mb-4" 
+                  className="h-40 mx-auto mb-6" 
                 />
                 <h1 className="text-xl font-bold">{t("app.subtitle")}</h1>
               </div>
