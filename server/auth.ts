@@ -7,6 +7,14 @@ import { promisify } from "util";
 import { storage } from "./storage";
 import { User as SelectUser } from "@shared/schema";
 
+// Middleware to ensure user is an advisor
+function ensureAdvisor(req: any, res: any, next: any) {
+  if (req.isAuthenticated() && req.user.role === "advisor") {
+    return next();
+  }
+  res.status(403).json({ message: "Forbidden: Advisor role required" });
+}
+
 declare global {
   namespace Express {
     interface User extends SelectUser {}
@@ -94,6 +102,29 @@ export function setupAuth(app: Express) {
         const { password, ...userWithoutPassword } = user;
         res.status(201).json(userWithoutPassword);
       });
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  // Register investor account - Only advisors can register investors
+  app.post("/api/register/investor", ensureAdvisor, async (req, res, next) => {
+    try {
+      const existingUser = await storage.getUserByUsername(req.body.username);
+      if (existingUser) {
+        return res.status(400).json({ message: "שם משתמש כבר קיים במערכת" });
+      }
+
+      const user = await storage.createUser({
+        ...req.body,
+        role: "investor", // Always create as investor
+        password: await hashPassword(req.body.password),
+      });
+
+      // Don't login as the investor, the advisor stays logged in
+      // Strip password from response
+      const { password, ...userWithoutPassword } = user;
+      res.status(201).json(userWithoutPassword);
     } catch (error) {
       next(error);
     }

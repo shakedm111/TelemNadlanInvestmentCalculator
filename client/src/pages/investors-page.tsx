@@ -1,3 +1,4 @@
+import { useState } from "react";
 import MainLayout from "@/components/layouts/main-layout";
 import PageHeader from "@/components/ui/page-header";
 import { useTranslation } from "@/hooks/use-locale";
@@ -7,7 +8,7 @@ import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { Edit, MoreHorizontal, Trash } from "lucide-react";
+import { Edit, MoreHorizontal, Plus, Trash } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,9 +18,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User } from "@shared/schema";
+import { CreateInvestorDialog } from "@/components/investors/create-investor-dialog";
 
 export default function InvestorsPage() {
   const { t } = useTranslation();
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
   // Fetch investors - only accessible by advisors (role='advisor')
   const { data: investors, isLoading, error } = useQuery<User[]>({
@@ -92,7 +95,12 @@ export default function InvestorsPage() {
       <PageHeader
         title={t("investors.title")}
         buttonText={t("investors.new")}
-        onButtonClick={() => {}}
+        onButtonClick={() => setCreateDialogOpen(true)}
+      />
+      
+      <CreateInvestorDialog
+        open={createDialogOpen}
+        onOpenChange={setCreateDialogOpen}
       />
 
       {isLoading ? (
