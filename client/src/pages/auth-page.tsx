@@ -24,11 +24,14 @@ export default function AuthPage() {
           <Card className="w-full max-w-xl">
             <CardContent className="pt-6">
               <div className="mb-6 text-center">
-                <img 
-                  src="/src/assets/telem-logo.png"
-                  alt={t("app.name")} 
-                  className="h-56 mx-auto mb-6 max-w-full" 
-                />
+                <div className="w-full flex justify-center items-center">
+                  <img 
+                    src="/src/assets/telem-logo.png"
+                    alt={t("app.name")} 
+                    className="w-full mx-auto mb-6" 
+                    style={{ minHeight: '280px', objectFit: 'contain' }}
+                  />
+                </div>
                 <h1 className="text-xl font-bold">{t("app.subtitle")}</h1>
               </div>
 
