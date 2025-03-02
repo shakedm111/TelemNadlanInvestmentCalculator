@@ -35,6 +35,7 @@ export default function AuthPage() {
                 <h1 className="text-xl font-bold">{t("app.subtitle")}</h1>
               </div>
 
+              {/* Only display login form, registration available only through advisors */}
               <LoginForm />
             </CardContent>
           </Card>

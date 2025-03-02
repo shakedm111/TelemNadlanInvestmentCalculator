@@ -57,7 +57,7 @@ export default function RegisterForm() {
       name: "",
       email: "",
       phone: "",
-      role: "investor",
+      role: "investor", // Always set to investor when registered by an advisor
     },
   });
 
@@ -157,27 +157,7 @@ export default function RegisterForm() {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>תפקיד</FormLabel>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="בחר תפקיד" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="investor">משקיע</SelectItem>
-                    <SelectItem value="advisor">יועץ השקעות</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {/* Role field removed - all users registered by advisors are investors */}
         </div>
 
         <Button

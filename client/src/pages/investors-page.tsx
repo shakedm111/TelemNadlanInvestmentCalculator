@@ -21,8 +21,8 @@ import { User } from "@shared/schema";
 export default function InvestorsPage() {
   const { t } = useTranslation();
 
-  // Fetch investors
-  const { data: investors, isLoading } = useQuery<User[]>({
+  // Fetch investors - only accessible by advisors (role='advisor')
+  const { data: investors, isLoading, error } = useQuery<User[]>({
     queryKey: ["/api/investors"],
   });
 
@@ -97,6 +97,10 @@ export default function InvestorsPage() {
 
       {isLoading ? (
         <div className="text-center py-10">טוען משקיעים...</div>
+      ) : error ? (
+        <div className="text-center py-10 text-red-500">
+          דף זה זמין רק ליועצים. במידה ואתה יועץ ורואה הודעה זו, אנא פנה למנהל המערכת.
+        </div>
       ) : (
         <DataTable
           columns={columns}
