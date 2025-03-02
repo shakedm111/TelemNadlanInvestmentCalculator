@@ -7,7 +7,8 @@ import {
   insertCalculatorSchema, 
   insertPropertySchema, 
   insertInvestmentSchema, 
-  insertAnalysisSchema 
+  insertAnalysisSchema,
+  User
 } from "@shared/schema";
 import { ZodError } from "zod";
 
@@ -189,8 +190,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/investors", ensureAuthenticated, ensureAdvisor, async (req, res) => {
     try {
       // Only get users with investor role
-      const allUsers = await storage.getUsers?.() || [];
-      const investors = allUsers.filter(user => user.role === "investor");
+      const allUsers = await storage.getUsers();
+      const investors = allUsers.filter((user: User) => user.role === "investor");
       
       // For security, don't send passwords
       const investorsWithoutPasswords = investors.map(({ password, ...investor }) => investor);
@@ -582,14 +583,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Helper function to get users (for the storage.getUsers fallback above)
-  storage.getUsers = async () => {
-    try {
-      return await db.select().from(users);
-    } catch (error) {
-      return [];
-    }
-  };
+  // Note: We no longer need this helper function as getUsers is properly implemented in the DatabaseStorage class
 
   const httpServer = createServer(app);
   return httpServer;
