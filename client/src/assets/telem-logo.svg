@@ -1,0 +1,24 @@
+<svg width="400" height="150" viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <!-- Building blocks -->
+    <path d="M60 120 L120 120 L120 60 L60 60 Z" fill="#42B4AB" />
+    <path d="M60 60 L120 60 L120 30 L60 30 Z" fill="#CCCCCC" />
+    <path d="M30 90 L90 90 L90 30 L30 30 Z" fill="#42B4AB" />
+    <path d="M30 30 L90 30 L90 0 L30 0 Z" fill="#CCCCCC" />
+    
+    <!-- Text "TELEM" -->
+    <path d="M180 40 L260 40 L260 60 L230 60 L230 120 L210 120 L210 60 L180 60 Z" fill="#666666" />
+    <path d="M270 40 L310 40 L310 120 L290 120 L290 60 L270 60 Z" fill="#666666" />
+    <path d="M320 40 L340 40 L340 120 L320 120 Z" fill="#666666" />
+    <path d="M350 40 L390 40 L390 60 L370 60 L370 80 L390 80 L390 100 L370 100 L370 120 L350 120 Z" fill="#666666" />
+    <path d="M400 40 L440 40 L440 60 L420 60 L420 80 L440 80 L440 100 L420 100 L420 120 L400 120 Z" fill="#666666" />
+    
+    <!-- Text "NADLAN" -->
+    <path d="M240 130 L250 130 L250 140 L240 140 Z" fill="#999999" />
+    <path d="M255 130 L265 130 L265 140 L260 140 L260 135 L255 135 Z" fill="#999999" />
+    <path d="M270 130 L280 130 L280 140 L270 140 Z" fill="#999999" />
+    <path d="M285 130 L295 130 L295 140 L285 140 Z" fill="#999999" />
+    <path d="M300 130 L310 130 L310 140 L305 140 L305 135 L300 135 Z" fill="#999999" />
+    <path d="M315 130 L325 130 L325 140 L315 140 Z" fill="#999999" />
+  </g>
+</svg>
