@@ -185,8 +185,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Investors Routes
-  app.get("/api/investors", ensureAuthenticated, async (req, res) => {
+  // Investors Routes (accessible only by advisors)
+  app.get("/api/investors", ensureAuthenticated, ensureAdvisor, async (req, res) => {
     try {
       // Only get users with investor role
       const allUsers = await storage.getUsers?.() || [];
