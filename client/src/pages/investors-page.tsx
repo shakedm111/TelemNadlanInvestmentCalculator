@@ -32,19 +32,29 @@ export default function InvestorsPage() {
   const columns: ColumnDef<User>[] = [
     {
       accessorKey: "name",
-      header: t("investors.name"),
+      header: t("investors.name") || "שם",
+    },
+    {
+      accessorKey: "username",
+      header: t("investors.username") || "שם משתמש",
     },
     {
       accessorKey: "email",
-      header: t("investors.email"),
+      header: t("investors.email") || "אימייל",
+      cell: ({ row }) => {
+        return row.original.email || "---";
+      },
     },
     {
       accessorKey: "phone",
-      header: t("investors.phone"),
+      header: t("investors.phone") || "טלפון",
+      cell: ({ row }) => {
+        return row.original.phone || "---";
+      },
     },
     {
       accessorKey: "calculatorsCount",
-      header: t("investors.calculators_count"),
+      header: t("investors.calculators_count") || "מס' מחשבונים",
       cell: ({ row }) => {
         return (
           <Badge variant="secondary" className="font-normal">
@@ -55,9 +65,9 @@ export default function InvestorsPage() {
     },
     {
       accessorKey: "createdAt",
-      header: t("investors.created_at"),
+      header: t("investors.created_at") || "נוצר בתאריך",
       cell: ({ row }) => {
-        return formatDate(row.original.createdAt);
+        return formatDate(row.original.createdAt || new Date());
       },
     },
     {
