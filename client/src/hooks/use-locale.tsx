@@ -69,7 +69,7 @@ const translations = {
     "auth.signin": "התחבר",
     "auth.signup": "הירשם",
     "auth.forgot_password": "שכחתי סיסמה",
-    "auth.welcome": "ברוכים הבאים למערכת ניתוח השקעות נדל\"ן של תלם נדל\"ן",
+    "auth.welcome": "ברוכים הבאים למערכת ניתוח השקעות נדל\"ן של תלם נדל\"ן!",
     "auth.intro": "המערכת מאפשרת ניתוח מקיף של השקעות נדל\"ן בקפריסין, כולל חישובי תשואה, תזרים מזומנים ועוד",
     
     // Buttons
@@ -157,7 +157,7 @@ const translations = {
   "en-US": {
     // Common
     "app.name": "Telem Real Estate",
-    "app.subtitle": "Real Estate Investment Analysis System",
+    "app.subtitle": "Cyprus Real Estate Investment Analysis System",
     
     // Navigation
     "nav.home": "Home",
@@ -179,7 +179,7 @@ const translations = {
     "auth.signin": "Sign In",
     "auth.signup": "Sign Up",
     "auth.forgot_password": "Forgot Password",
-    "auth.welcome": "Welcome to Real Estate Investment Analysis System",
+    "auth.welcome": "Welcome to Telem Real Estate Investment Analysis System!",
     "auth.intro": "The system allows for comprehensive analysis of real estate investments in Cyprus, including yield calculations, cash flow and more",
     
     // Buttons
