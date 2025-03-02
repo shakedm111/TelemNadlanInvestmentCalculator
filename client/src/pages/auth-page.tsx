@@ -27,7 +27,7 @@ export default function AuthPage() {
                 <img 
                   src="/src/assets/telem-logo.png"
                   alt={t("app.name")} 
-                  className="h-40 mx-auto mb-6" 
+                  className="h-64 mx-auto mb-6" // Increased logo height
                 />
                 <h1 className="text-xl font-bold">{t("app.subtitle")}</h1>
               </div>
@@ -54,7 +54,7 @@ export default function AuthPage() {
                   <p>חישובי תשואה, תזרים מזומנים, משכנתאות ועוד</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start space-x-4 space-x-reverse">
                 <div className="bg-white/20 p-3 rounded-full">
                   <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +66,7 @@ export default function AuthPage() {
                   <p>שיתוף פשוט של תוצאות עם משקיעים ושותפים</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start space-x-4 space-x-reverse">
                 <div className="bg-white/20 p-3 rounded-full">
                   <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
