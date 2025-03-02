@@ -25,25 +25,14 @@ export default function AuthPage() {
             <CardContent className="pt-6">
               <div className="mb-6 text-center">
                 <img 
-                  src="/src/assets/telem-logo.svg"
+                  src="/src/assets/telem-logo.png"
                   alt={t("app.name")} 
                   className="h-12 mx-auto mb-2" 
                 />
                 <h1 className="text-xl font-bold">{t("app.subtitle")}</h1>
               </div>
 
-              <Tabs defaultValue="login" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-6">
-                  <TabsTrigger value="login">{t("auth.login")}</TabsTrigger>
-                  <TabsTrigger value="register">{t("auth.register")}</TabsTrigger>
-                </TabsList>
-                <TabsContent value="login">
-                  <LoginForm />
-                </TabsContent>
-                <TabsContent value="register">
-                  <RegisterForm />
-                </TabsContent>
-              </Tabs>
+              <LoginForm />
             </CardContent>
           </Card>
         </div>

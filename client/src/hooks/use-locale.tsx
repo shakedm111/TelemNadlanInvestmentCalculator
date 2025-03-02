@@ -47,7 +47,7 @@ const translations = {
   "he-IL": {
     // Common
     "app.name": "תלם נדל\"ן",
-    "app.subtitle": "מערכת ניתוח השקעות נדל\"ן",
+    "app.subtitle": "מערכת ניתוח השקעות נדל\"ן בקפריסין",
     
     // Navigation
     "nav.home": "דף הבית",
@@ -69,7 +69,7 @@ const translations = {
     "auth.signin": "התחבר",
     "auth.signup": "הירשם",
     "auth.forgot_password": "שכחתי סיסמה",
-    "auth.welcome": "ברוכים הבאים למערכת ניתוח השקעות נדל\"ן",
+    "auth.welcome": "ברוכים הבאים למערכת ניתוח השקעות נדל\"ן של תלם נדל\"ן",
     "auth.intro": "המערכת מאפשרת ניתוח מקיף של השקעות נדל\"ן בקפריסין, כולל חישובי תשואה, תזרים מזומנים ועוד",
     
     // Buttons
