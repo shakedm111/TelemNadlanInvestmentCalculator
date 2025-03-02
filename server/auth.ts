@@ -70,15 +70,21 @@ export function setupAuth(app: Express) {
     }
   });
 
-  app.post("/api/register", async (req, res, next) => {
+  // Create advisor account - This is only used for the first admin setup
+  // and should be disabled or protected in production
+  app.post("/api/register/advisor", async (req, res, next) => {
     try {
+      // In production, this should check for a special admin token or be disabled
+      // For development, we'll allow it for now
+      
       const existingUser = await storage.getUserByUsername(req.body.username);
       if (existingUser) {
-        return res.status(400).send("שם משתמש כבר קיים במערכת");
+        return res.status(400).json({ message: "שם משתמש כבר קיים במערכת" });
       }
 
       const user = await storage.createUser({
         ...req.body,
+        role: "advisor", // This creates an advisor account
         password: await hashPassword(req.body.password),
       });
 
@@ -88,6 +94,37 @@ export function setupAuth(app: Express) {
         const { password, ...userWithoutPassword } = user;
         res.status(201).json(userWithoutPassword);
       });
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  // Register endpoint - accessible only by advisors for creating investor accounts
+  app.post("/api/register", async (req, res, next) => {
+    try {
+      // Check if the request is from an authenticated advisor
+      if (!req.isAuthenticated() || req.user.role !== "advisor") {
+        return res.status(403).json({ 
+          message: "רק יועצים יכולים ליצור חשבונות משתמש חדשים" 
+        });
+      }
+      
+      const existingUser = await storage.getUserByUsername(req.body.username);
+      if (existingUser) {
+        return res.status(400).json({ message: "שם משתמש כבר קיים במערכת" });
+      }
+
+      // Force the role to be "investor" when created by an advisor
+      const user = await storage.createUser({
+        ...req.body,
+        role: "investor", // Always set role to investor when created through this endpoint
+        password: await hashPassword(req.body.password),
+      });
+
+      // Don't automatically log in the created user
+      // Just return the created user data
+      const { password, ...userWithoutPassword } = user;
+      res.status(201).json(userWithoutPassword);
     } catch (error) {
       next(error);
     }
