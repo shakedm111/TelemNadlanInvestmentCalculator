@@ -689,32 +689,58 @@ export class DatabaseStorage implements IStorage {
     analysesCount: number
   }> {
     try {
-      // Count investors
-      const investorsResult = await db
-        .select({ count: db.fn.count(users.id).as('count') })
-        .from(users)
-        .where(eq(users.role, 'investor'));
+      // הדרך הבטוחה ביותר לקבלת ספירה ללא שגיאות
+      let investorsCount = 0;
+      let calculatorsCount = 0;
+      let propertiesCount = 0;
+      let analysesCount = 0;
       
-      // Count calculators
-      const calculatorsResult = await db
-        .select({ count: db.fn.count(calculators.id).as('count') })
-        .from(calculators);
+      try {
+        // Count investors - with safer error handling
+        const investorsResult = await db
+          .select({ count: db.fn.count(users.id) })
+          .from(users)
+          .where(eq(users.role, 'investor'));
+        investorsCount = Number(investorsResult[0]?.count ?? 0);
+      } catch (e) {
+        console.error("Error counting investors:", e);
+      }
       
-      // Count properties
-      const propertiesResult = await db
-        .select({ count: db.fn.count(properties.id).as('count') })
-        .from(properties);
+      try {
+        // Count calculators
+        const calculatorsResult = await db
+          .select({ count: db.fn.count(calculators.id) })
+          .from(calculators);
+        calculatorsCount = Number(calculatorsResult[0]?.count ?? 0);
+      } catch (e) {
+        console.error("Error counting calculators:", e);
+      }
       
-      // Count analyses
-      const analysesResult = await db
-        .select({ count: db.fn.count(analyses.id).as('count') })
-        .from(analyses);
+      try {
+        // Count properties
+        const propertiesResult = await db
+          .select({ count: db.fn.count(properties.id) })
+          .from(properties);
+        propertiesCount = Number(propertiesResult[0]?.count ?? 0);
+      } catch (e) {
+        console.error("Error counting properties:", e);
+      }
+      
+      try {
+        // Count analyses
+        const analysesResult = await db
+          .select({ count: db.fn.count(analyses.id) })
+          .from(analyses);
+        analysesCount = Number(analysesResult[0]?.count ?? 0);
+      } catch (e) {
+        console.error("Error counting analyses:", e);
+      }
       
       return {
-        investorsCount: Number(investorsResult[0]?.count || 0),
-        calculatorsCount: Number(calculatorsResult[0]?.count || 0),
-        propertiesCount: Number(propertiesResult[0]?.count || 0),
-        analysesCount: Number(analysesResult[0]?.count || 0)
+        investorsCount,
+        calculatorsCount,
+        propertiesCount,
+        analysesCount
       };
     } catch (error) {
       console.error("Error in getDashboardOverview:", error);
