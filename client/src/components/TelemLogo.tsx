@@ -1,4 +1,5 @@
 import React from 'react';
+import telemLogo from '../assets/telem-logo.png';
 
 interface TelemLogoProps {
   className?: string;
@@ -12,23 +13,14 @@ const TelemLogo: React.FC<TelemLogoProps> = ({ className = '', size = 'md' }) =>
     lg: 'h-16',
   };
 
+  const heightClass = sizes[size];
+
   return (
-    <svg 
-      className={`${sizes[size]} ${className}`} 
-      viewBox="0 0 240 80" 
-      xmlns="http://www.w3.org/2000/svg"
-      aria-labelledby="telemLogoTitle"
-    >
-      <title id="telemLogoTitle">תלם נדל"ן לוגו</title>
-      <path fill="#35B0AB" d="M60 40h40v40H60z" />
-      <path fill="#aaaaaa" d="M60 40h-40v40h40z" />
-      <path fill="#35B0AB" d="M20 20h40v40H20z" />
-      <path fill="#aaaaaa" d="M20 20h-20v40h20z" />
-      <g fill="#666666" transform="translate(120, 45)">
-        <path d="M0 0h12v2H0zm16 0h12v2H16zm16 0h12v2H32zm16 0h12v2H48zm16 0h12v2H64z" />
-        <text x="88" y="0" fontSize="18" fontWeight="500">NADLAN</text>
-      </g>
-    </svg>
+    <img 
+      src={telemLogo} 
+      alt="תלם נדל״ן לוגו" 
+      className={`${heightClass} ${className} object-contain`} 
+    />
   );
 };
 
