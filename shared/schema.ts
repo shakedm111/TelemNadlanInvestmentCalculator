@@ -150,6 +150,7 @@ export const insertCalculatorSchema = createInsertSchema(calculators).omit({
   updatedAt: true,
   investmentOptionsCount: true,
   analysesCount: true,
+  investorName: true, // Omit since it's auto-populated based on userId
 });
 
 export const insertPropertySchema = createInsertSchema(properties).omit({

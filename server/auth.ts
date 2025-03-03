@@ -37,6 +37,9 @@ async function comparePasswords(supplied: string, stored: string) {
 }
 
 export function setupAuth(app: Express) {
+  // Add debug logging for session setup
+  console.log("Setting up session with auth...");
+  
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "telem-nadlan-super-secret-key",
     resave: false,
@@ -47,6 +50,8 @@ export function setupAuth(app: Express) {
       secure: process.env.NODE_ENV === "production",
     }
   };
+  
+  console.log("Session settings configured");
 
   app.set("trust proxy", 1);
   app.use(session(sessionSettings));

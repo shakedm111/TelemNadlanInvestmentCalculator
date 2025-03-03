@@ -1,0 +1,66 @@
+בהתבסס על המידע שסיפקת, אני מזהה שתי בעיות עיקריות שיש לפתור:
+1. הלוגו
+הבעיה נראית כמו בעיית נתיבים - הייבוא של telemLogo ב-TelemLogo.tsx מנסה לקחת את התמונה מנתיב שגוי.
+פתרון:
+במקום לייבא את התמונה מ-../assets/telem-logo.png, יש לשנות את הקובץ TelemLogo.tsx להשתמש בנתיב המוחלט של התמונה בתיקיית public:
+tsxCopy// במקום:
+import telemLogo from '../assets/telem-logo.png';
+
+// יש לשנות ל:
+const telemLogo = '/telem-logo.png';  // נתיב ישיר לתיקיית public
+2. בעיית יצירת מחשבון
+הבעיה: סכמת הנתונים מצפה לשדה investorName אך הוא לא נשלח בעת יצירת מחשבון.
+פתרון:
+יש לעדכן את פונקציית handleCalcSubmit בקובץ calculator-dialog.tsx כדי שתכלול את שדה investorName:
+javascriptCopy// בפונקציה handleCalcSubmit, יש לעדכן את ה-payload:
+
+const handleCalcSubmit = async (values: any) => {
+  try {
+    // מציאת שם המשקיע לפי ה-ID
+    const investor = investors?.find(inv => inv.id.toString() === values.investorId.toString());
+    const investorName = investor?.name || 'משקיע לא ידוע';
+    
+    const payload = {
+      name: values.name,
+      userId: values.investorId,
+      investorName: investorName, // הוספת השדה החסר
+      selfEquity: values.selfEquity,
+      hasMortgage: values.hasMortgage,
+      hasPropertyInIsrael: values.hasPropertyInIsrael,
+      investmentPreference: values.investmentPreference,
+      exchangeRate: values.exchangeRate,
+      vatRate: values.vatRate,
+      status: values.status
+    };
+    
+    // המשך הקוד הקיים...
+הנחיות ל-REPLIT:
+יש להנחות את REPLIT לבצע את השינויים הבאים:
+
+עדכון TelemLogo.tsx:
+
+לפתוח את הקובץ client/src/components/TelemLogo.tsx
+לשנות את שורת הייבוא מ-import telemLogo from '../assets/telem-logo.png'; ל-const telemLogo = '/telem-logo.png';
+
+
+עדכון calculator-dialog.tsx:
+
+לפתוח את הקובץ client/src/components/dialogs/calculator-dialog.tsx
+למצוא את פונקציית handleCalcSubmit
+להוסיף את הקוד הבא לפני יצירת ה-payload:
+
+javascriptCopyconst investor = investors?.find(inv => inv.id.toString() === values.investorId.toString());
+const investorName = investor?.name || 'משקיע לא ידוע';
+
+להוסיף את השדה investorName: investorName ל-payload
+
+
+לאחר ביצוע השינויים:
+
+לבצע restart של האפליקציה
+לבדוק שהלוגו מופיע כראוי
+לבדוק שניתן ליצור מחשבון חדש
+
+
+
+הערה: השגיאות שרואים בקונסול בקשר ל-"Cannot read properties of undefined (reading 'count')" נראות כתקלות בצד השרת, אך הן לא קשורות ישירות לבעיות שציינת (לוגו חסר ויצירת מחשבון). אלו כנראה בעיות נפרדות בקוד ה-getDashboardOverview בקובץ storage.ts.
