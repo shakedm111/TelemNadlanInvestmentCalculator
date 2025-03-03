@@ -29,15 +29,15 @@ const formSchema = z.object({
   name: z.string().min(2, {
     message: "שם המחשבון חייב להכיל לפחות 2 תווים",
   }),
-  investorId: z.number().min(1, {
+  investorId: z.string().min(1, {
     message: "יש לבחור משקיע",
-  }),
-  selfEquity: z.number().min(0),
+  }).transform(val => parseInt(val, 10)),
+  selfEquity: z.string().transform(val => parseFloat(val) || 0),
   hasMortgage: z.boolean(),
   hasPropertyInIsrael: z.boolean(),
   investmentPreference: z.string(),
-  exchangeRate: z.number().min(0.01),
-  vatRate: z.number().min(0).max(100),
+  exchangeRate: z.string().transform(val => parseFloat(val) || 3.95),
+  vatRate: z.string().transform(val => parseFloat(val) || 19),
   status: z.string(),
 });
 
@@ -65,13 +65,13 @@ export default function CalculatorForm({
   // Form default values
   const defaultValues: Partial<FormValues> = {
     name: calculator?.name || "",
-    investorId: calculator?.investorId || 0,
-    selfEquity: calculator?.selfEquity || 0,
+    investorId: calculator?.investorId ? calculator.investorId.toString() : "",
+    selfEquity: calculator?.selfEquity ? calculator.selfEquity.toString() : "0",
     hasMortgage: calculator?.hasMortgage || false,
     hasPropertyInIsrael: calculator?.hasPropertyInIsrael || false,
     investmentPreference: calculator?.investmentPreference || "positive_cashflow",
-    exchangeRate: calculator?.exchangeRate || 3.95,
-    vatRate: calculator?.vatRate || 19,
+    exchangeRate: calculator?.exchangeRate ? calculator.exchangeRate.toString() : "3.95",
+    vatRate: calculator?.vatRate ? calculator.vatRate.toString() : "19",
     status: calculator?.status || "draft",
   };
 
@@ -93,13 +93,13 @@ export default function CalculatorForm({
     if (calculator) {
       form.reset({
         name: calculator.name,
-        investorId: calculator.investorId,
-        selfEquity: calculator.selfEquity,
+        investorId: calculator.userId.toString(),
+        selfEquity: calculator.selfEquity.toString(),
         hasMortgage: calculator.hasMortgage,
         hasPropertyInIsrael: calculator.hasPropertyInIsrael,
         investmentPreference: calculator.investmentPreference,
-        exchangeRate: calculator.exchangeRate,
-        vatRate: calculator.vatRate,
+        exchangeRate: calculator.exchangeRate.toString(),
+        vatRate: calculator.vatRate.toString(),
         status: calculator.status,
       });
     }
