@@ -127,7 +127,10 @@ export function CalculatorDialog({ calculator, setOpen }: CalculatorDialogProps)
   // Calculator form submission
   const handleCalcSubmit = async (values: any) => {
     try {
-      // Make sure investorId is correctly sent as userId
+      // Make sure investorId is correctly sent as userId and find investor name
+      const investor = investors?.find(inv => inv.id.toString() === values.investorId.toString());
+      const investorName = investor?.name || 'משקיע';
+      
       const payload = {
         name: values.name,
         userId: values.investorId,
@@ -137,7 +140,8 @@ export function CalculatorDialog({ calculator, setOpen }: CalculatorDialogProps)
         investmentPreference: values.investmentPreference,
         exchangeRate: values.exchangeRate,
         vatRate: values.vatRate,
-        status: values.status
+        status: values.status,
+        investorName: investorName
       };
       
       if (calculator?.id) {

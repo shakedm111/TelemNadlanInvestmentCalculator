@@ -1,5 +1,5 @@
 import React from "react";
-import telemLogo from "../assets/telem-logo.png";
+const telemLogo = "/images/telem-logo.png";
 
 export const TelemLogo: React.FC<{ className?: string }> = ({ className = "h-10" }) => {
   return (
