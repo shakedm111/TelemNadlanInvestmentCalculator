@@ -70,14 +70,14 @@ export default function Sidebar() {
   return (
     <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-10 bg-sidebar shadow-md">
       <div className="flex flex-col flex-1">
-        <div className="flex h-16 shrink-0 items-center justify-center px-6 border-b border-sidebar-border">
+        <div className="flex h-20 shrink-0 items-center justify-center px-6 border-b border-sidebar-border">
           <Link href="/">
             <img 
-              src="/images/telem-logo.png" 
+              src="/telem-logo.png" 
               alt={t("app.name")} 
-              className="h-8" 
+              className="h-12 w-auto" 
               width="auto"
-              height="32"
+              height="48"
             />
           </Link>
         </div>

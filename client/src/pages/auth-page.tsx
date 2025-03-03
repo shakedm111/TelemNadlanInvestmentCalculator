@@ -26,10 +26,10 @@ export default function AuthPage() {
               <div className="mb-6 text-center">
                 <div className="w-full flex justify-center items-center">
                   <img 
-                    src="/src/assets/telem-logo.png"
+                    src="/telem-logo.png"
                     alt={t("app.name")} 
-                    className="w-full mx-auto mb-6" 
-                    style={{ minHeight: '280px', objectFit: 'contain' }}
+                    className="w-64 mx-auto mb-6" 
+                    style={{ objectFit: 'contain' }}
                   />
                 </div>
                 <h1 className="text-xl font-bold">{t("app.subtitle")}</h1>

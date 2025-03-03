@@ -33,11 +33,11 @@ export default function TopNav() {
       <div className="md:hidden">
         <Link href="/">
           <img 
-            src="/images/telem-logo.png" 
+            src="/telem-logo.png" 
             alt={t("app.name")} 
-            className="h-8" 
+            className="h-10 w-auto" 
             width="auto"
-            height="32"
+            height="40"
           />
         </Link>
       </div>
