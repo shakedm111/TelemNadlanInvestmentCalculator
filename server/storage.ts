@@ -688,29 +688,44 @@ export class DatabaseStorage implements IStorage {
     propertiesCount: number,
     analysesCount: number
   }> {
-    const [investorsResult] = await db
-      .select({ count: db.fn.count(users.id) })
-      .from(users)
-      .where(eq(users.role, 'investor'));
-    
-    const [calculatorsResult] = await db
-      .select({ count: db.fn.count(calculators.id) })
-      .from(calculators);
-    
-    const [propertiesResult] = await db
-      .select({ count: db.fn.count(properties.id) })
-      .from(properties);
-    
-    const [analysesResult] = await db
-      .select({ count: db.fn.count(analyses.id) })
-      .from(analyses);
-    
-    return {
-      investorsCount: Number(investorsResult.count) || 0,
-      calculatorsCount: Number(calculatorsResult.count) || 0,
-      propertiesCount: Number(propertiesResult.count) || 0,
-      analysesCount: Number(analysesResult.count) || 0
-    };
+    try {
+      // Count investors
+      const investorsResult = await db
+        .select({ count: db.fn.count(users.id).as('count') })
+        .from(users)
+        .where(eq(users.role, 'investor'));
+      
+      // Count calculators
+      const calculatorsResult = await db
+        .select({ count: db.fn.count(calculators.id).as('count') })
+        .from(calculators);
+      
+      // Count properties
+      const propertiesResult = await db
+        .select({ count: db.fn.count(properties.id).as('count') })
+        .from(properties);
+      
+      // Count analyses
+      const analysesResult = await db
+        .select({ count: db.fn.count(analyses.id).as('count') })
+        .from(analyses);
+      
+      return {
+        investorsCount: Number(investorsResult[0]?.count || 0),
+        calculatorsCount: Number(calculatorsResult[0]?.count || 0),
+        propertiesCount: Number(propertiesResult[0]?.count || 0),
+        analysesCount: Number(analysesResult[0]?.count || 0)
+      };
+    } catch (error) {
+      console.error("Error in getDashboardOverview:", error);
+      // Return default values if there's an error
+      return {
+        investorsCount: 0,
+        calculatorsCount: 0,
+        propertiesCount: 0,
+        analysesCount: 0
+      };
+    }
   }
 }
 
