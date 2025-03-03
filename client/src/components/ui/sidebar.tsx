@@ -73,7 +73,7 @@ export default function Sidebar() {
         <div className="flex h-16 shrink-0 items-center justify-center px-6 border-b border-sidebar-border">
           <Link href="/">
             <img 
-              src="/telem-logo.png" 
+              src="/images/telem-logo.png" 
               alt={t("app.name")} 
               className="h-8" 
               width="auto"
