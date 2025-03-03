@@ -1,5 +1,4 @@
 import React from 'react';
-import telemLogo from '../assets/telem-logo.png';
 
 interface TelemLogoProps {
   className?: string;
@@ -17,7 +16,7 @@ const TelemLogo: React.FC<TelemLogoProps> = ({ className = '', size = 'md' }) =>
 
   return (
     <img 
-      src={telemLogo} 
+      src="/telem-logo.png" 
       alt="תלם נדל״ן לוגו" 
       className={`${heightClass} ${className} object-contain`} 
     />

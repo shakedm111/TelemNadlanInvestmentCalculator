@@ -65,7 +65,7 @@ export default function CalculatorForm({
   // Form default values
   const defaultValues: Partial<FormValues> = {
     name: calculator?.name || "",
-    investorId: calculator?.investorId ? calculator.investorId.toString() : "",
+    investorId: calculator?.userId ? calculator.userId.toString() : "",
     selfEquity: calculator?.selfEquity ? calculator.selfEquity.toString() : "0",
     hasMortgage: calculator?.hasMortgage || false,
     hasPropertyInIsrael: calculator?.hasPropertyInIsrael || false,
@@ -133,8 +133,8 @@ export default function CalculatorForm({
                 <FormItem>
                   <FormLabel>{t("calculators.investor")}</FormLabel>
                   <Select
-                    onValueChange={(value) => field.onChange(parseInt(value))}
-                    value={field.value.toString()}
+                    onValueChange={field.onChange}
+                    value={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -163,7 +163,7 @@ export default function CalculatorForm({
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   </FormControl>
                 </FormItem>
@@ -252,7 +252,7 @@ export default function CalculatorForm({
                       type="number"
                       step="0.01"
                       {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   </FormControl>
                 </FormItem>
@@ -269,7 +269,7 @@ export default function CalculatorForm({
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   </FormControl>
                 </FormItem>
