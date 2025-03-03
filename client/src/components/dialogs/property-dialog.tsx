@@ -118,10 +118,10 @@ export function PropertyDialog({ property, setOpen }: PropertyDialogProps) {
     : "הוספת נכס חדש";
 
   return (
-    <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-auto">
+    <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-auto" aria-describedby="property-dialog-description">
       <DialogHeader>
         <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>
+        <DialogDescription id="property-dialog-description">
           {property?.id 
             ? "עדכון פרטי הנכס"
             : "הכנסת פרטי נכס חדש למערכת"}

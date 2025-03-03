@@ -271,10 +271,10 @@ export function CalculatorDialog({ calculator, setOpen }: CalculatorDialogProps)
   };
 
   return (
-    <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-hidden">
+    <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-hidden" aria-describedby="dialog-description">
       <DialogHeader>
         <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>
+        <DialogDescription id="dialog-description">
           {calculator?.id 
             ? "עריכת פרטי המחשבון, אפשרויות השקעה וניתוחים" 
             : "יצירת מחשבון חדש לניתוח השקעה"}
@@ -377,10 +377,10 @@ export function CalculatorDialog({ calculator, setOpen }: CalculatorDialogProps)
 
       {/* Delete Investment Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent aria-describedby="alert-dialog-description">
           <AlertDialogHeader>
             <AlertDialogTitle>האם אתה בטוח?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogDescription id="alert-dialog-description">
               פעולה זו תמחק לצמיתות את אפשרות ההשקעה.
               פעולה זו לא ניתנת לביטול.
             </AlertDialogDescription>
