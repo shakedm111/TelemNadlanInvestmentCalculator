@@ -24,8 +24,8 @@ export default function CalculatorsPage() {
   const { t } = useTranslation();
   const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
-  const [investorFilter, setInvestorFilter] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+  const [investorFilter, setInvestorFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [dialogOpen, setDialogOpen] = useState(false);
 
   // Fetch calculators
@@ -42,8 +42,10 @@ export default function CalculatorsPage() {
   const filteredCalculators = calculators?.filter((calculator) => {
     const nameMatch = calculator.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                      calculator.investorName.toLowerCase().includes(searchTerm.toLowerCase());
-    const investorMatch = investorFilter ? calculator.investorId.toString() === investorFilter : true;
-    const statusMatch = statusFilter ? calculator.status === statusFilter : true;
+    const investorMatch = investorFilter && investorFilter !== "all" ? 
+                          calculator.userId.toString() === investorFilter : true;
+    const statusMatch = statusFilter && statusFilter !== "all" ? 
+                        calculator.status === statusFilter : true;
     
     return nameMatch && investorMatch && statusMatch;
   });
@@ -105,7 +107,7 @@ export default function CalculatorsPage() {
               <SelectValue placeholder={t("calculators.investor")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">כל המשקיעים</SelectItem>
+              <SelectItem value="all">כל המשקיעים</SelectItem>
               {investors?.map((investor) => (
                 <SelectItem key={investor.id} value={investor.id.toString()}>
                   {investor.name}
@@ -119,7 +121,7 @@ export default function CalculatorsPage() {
               <SelectValue placeholder={t("calculators.status")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">כל הסטטוסים</SelectItem>
+              <SelectItem value="all">כל הסטטוסים</SelectItem>
               <SelectItem value="active">{t("status.active")}</SelectItem>
               <SelectItem value="draft">{t("status.draft")}</SelectItem>
               <SelectItem value="archived">{t("status.archived")}</SelectItem>
@@ -145,8 +147,8 @@ export default function CalculatorsPage() {
           <p className="text-muted-foreground mb-4">לא נמצאו מחשבונים התואמים את החיפוש</p>
           <Button onClick={() => {
             setSearchTerm("");
-            setInvestorFilter("");
-            setStatusFilter("");
+            setInvestorFilter("all");
+            setStatusFilter("all");
           }}>
             נקה פילטרים
           </Button>
