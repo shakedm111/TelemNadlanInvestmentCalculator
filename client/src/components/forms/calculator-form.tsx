@@ -32,12 +32,12 @@ const formSchema = z.object({
   investorId: z.string().min(1, {
     message: "יש לבחור משקיע",
   }).transform(val => parseInt(val, 10)),
-  selfEquity: z.string().transform(val => parseFloat(val) || 0),
+  selfEquity: z.string().transform(val => val.toString()),
   hasMortgage: z.boolean(),
   hasPropertyInIsrael: z.boolean(),
   investmentPreference: z.string(),
-  exchangeRate: z.string().transform(val => parseFloat(val) || 3.95),
-  vatRate: z.string().transform(val => parseFloat(val) || 19),
+  exchangeRate: z.string().transform(val => val.toString()),
+  vatRate: z.string().transform(val => val.toString()),
   status: z.string(),
 });
 

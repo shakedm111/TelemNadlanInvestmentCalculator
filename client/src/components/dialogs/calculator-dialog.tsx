@@ -127,16 +127,29 @@ export function CalculatorDialog({ calculator, setOpen }: CalculatorDialogProps)
   // Calculator form submission
   const handleCalcSubmit = async (values: any) => {
     try {
+      // Make sure investorId is correctly sent as userId
+      const payload = {
+        name: values.name,
+        userId: values.investorId,
+        selfEquity: values.selfEquity,
+        hasMortgage: values.hasMortgage,
+        hasPropertyInIsrael: values.hasPropertyInIsrael,
+        investmentPreference: values.investmentPreference,
+        exchangeRate: values.exchangeRate,
+        vatRate: values.vatRate,
+        status: values.status
+      };
+      
       if (calculator?.id) {
         // Update
-        await apiRequest("PATCH", `/api/calculators/${calculator.id}`, values);
+        await apiRequest("PATCH", `/api/calculators/${calculator.id}`, payload);
         toast({
           title: "מחשבון עודכן",
           description: "המחשבון עודכן בהצלחה",
         });
       } else {
         // Create
-        await apiRequest("POST", "/api/calculators", values);
+        await apiRequest("POST", "/api/calculators", payload);
         toast({
           title: "מחשבון נוצר",
           description: "המחשבון נוצר בהצלחה",
@@ -146,6 +159,7 @@ export function CalculatorDialog({ calculator, setOpen }: CalculatorDialogProps)
       queryClient.invalidateQueries({ queryKey: ["/api/calculators"] });
       setOpen(false);
     } catch (error) {
+      console.error("Error saving calculator:", error);
       toast({
         title: "שגיאה",
         description: "אירעה שגיאה בעת שמירת המחשבון",
