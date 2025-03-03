@@ -96,6 +96,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/calculators", ensureAuthenticated, async (req, res) => {
     try {
+      console.log("ניסיון יצירת מחשבון עם נתונים:", req.body);
+      
       const data = insertCalculatorSchema.parse(req.body);
       
       // If user is an investor, they can only create calculators for themselves
@@ -104,15 +106,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const calculator = await storage.createCalculator(data);
+      console.log("מחשבון נוצר בהצלחה:", calculator);
       res.status(201).json(calculator);
     } catch (error) {
+      console.error("שגיאה ביצירת מחשבון:", error);
+      
       if (error instanceof ZodError) {
+        console.error("פירוט שגיאות ולידציה:", JSON.stringify(error.errors, null, 2));
         return res.status(400).json({ 
           message: "Validation error", 
-          errors: error.errors 
+          errors: error.errors,
+          receivedData: req.body
         });
       }
-      res.status(500).json({ message: "Error creating calculator" });
+      
+      // שמירת מידע מפורט יותר על השגיאה
+      const errorDetails = {
+        message: "Error creating calculator",
+        error: error.message,
+        stack: error.stack,
+        receivedData: req.body
+      };
+      
+      console.error("פרטי שגיאה מלאים:", errorDetails);
+      res.status(500).json({ message: "Error creating calculator", error: error.message });
     }
   });
 

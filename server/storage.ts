@@ -701,7 +701,13 @@ export class DatabaseStorage implements IStorage {
           .select({ count: db.fn.count(users.id) })
           .from(users)
           .where(eq(users.role, 'investor'));
-        investorsCount = Number(investorsResult[0]?.count ?? 0);
+        
+        // בדיקה שהתוצאה קיימת ויש לה מאפיין count
+        if (investorsResult && investorsResult[0] && investorsResult[0].count !== undefined) {
+          investorsCount = Number(investorsResult[0].count);
+        } else {
+          console.log("הערה: תוצאת ספירת משקיעים חסרה או לא תקינה:", investorsResult);
+        }
       } catch (e) {
         console.error("Error counting investors:", e);
       }
@@ -711,7 +717,13 @@ export class DatabaseStorage implements IStorage {
         const calculatorsResult = await db
           .select({ count: db.fn.count(calculators.id) })
           .from(calculators);
-        calculatorsCount = Number(calculatorsResult[0]?.count ?? 0);
+        
+        // בדיקה שהתוצאה קיימת ויש לה מאפיין count
+        if (calculatorsResult && calculatorsResult[0] && calculatorsResult[0].count !== undefined) {
+          calculatorsCount = Number(calculatorsResult[0].count);
+        } else {
+          console.log("הערה: תוצאת ספירת מחשבונים חסרה או לא תקינה:", calculatorsResult);
+        }
       } catch (e) {
         console.error("Error counting calculators:", e);
       }
@@ -721,7 +733,13 @@ export class DatabaseStorage implements IStorage {
         const propertiesResult = await db
           .select({ count: db.fn.count(properties.id) })
           .from(properties);
-        propertiesCount = Number(propertiesResult[0]?.count ?? 0);
+        
+        // בדיקה שהתוצאה קיימת ויש לה מאפיין count
+        if (propertiesResult && propertiesResult[0] && propertiesResult[0].count !== undefined) {
+          propertiesCount = Number(propertiesResult[0].count);
+        } else {
+          console.log("הערה: תוצאת ספירת נכסים חסרה או לא תקינה:", propertiesResult);
+        }
       } catch (e) {
         console.error("Error counting properties:", e);
       }
@@ -731,7 +749,13 @@ export class DatabaseStorage implements IStorage {
         const analysesResult = await db
           .select({ count: db.fn.count(analyses.id) })
           .from(analyses);
-        analysesCount = Number(analysesResult[0]?.count ?? 0);
+        
+        // בדיקה שהתוצאה קיימת ויש לה מאפיין count
+        if (analysesResult && analysesResult[0] && analysesResult[0].count !== undefined) {
+          analysesCount = Number(analysesResult[0].count);
+        } else {
+          console.log("הערה: תוצאת ספירת ניתוחים חסרה או לא תקינה:", analysesResult);
+        }
       } catch (e) {
         console.error("Error counting analyses:", e);
       }
