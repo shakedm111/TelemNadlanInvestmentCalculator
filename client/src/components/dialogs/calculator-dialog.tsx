@@ -60,6 +60,11 @@ export function CalculatorDialog({ calculator, setOpen }: CalculatorDialogProps)
     queryKey: ["/api/properties"],
     enabled: !!calculator?.id,
   });
+  
+  // Fetch investors for calculator form
+  const { data: investors } = useQuery<any[]>({
+    queryKey: ["/api/investors"],
+  });
 
   // Create/Update investment mutation
   const investmentMutation = useMutation({
@@ -128,7 +133,7 @@ export function CalculatorDialog({ calculator, setOpen }: CalculatorDialogProps)
   const handleCalcSubmit = async (values: any) => {
     try {
       // Make sure investorId is correctly sent as userId and find investor name
-      const investor = investors?.find(inv => inv.id.toString() === values.investorId.toString());
+      const investor = investors?.find((inv: any) => inv.id.toString() === values.investorId.toString());
       const investorName = investor?.name || 'משקיע';
       
       const payload = {
