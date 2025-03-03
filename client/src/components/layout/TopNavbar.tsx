@@ -29,17 +29,23 @@ const TopNavbar: React.FC<TopNavbarProps> = ({
   };
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-sm sticky top-0 z-10">
       <div className="flex items-center justify-between p-4">
+        {/* הלוגו יופיע עכשיו גם בתצוגת מובייל וגם בדסקטופ */}
+        <div className="flex items-center">
+          <TelemLogo size="md" className="h-12 ml-2" /> {/* הגדלת הלוגו */}
+          {title && (
+            <div className="mr-4 text-right hidden md:block">
+              <h1 className="text-xl font-semibold">{title}</h1>
+              {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
+            </div>
+          )}
+        </div>
+        
         {/* Mobile menu button */}
         <button onClick={onMenuClick} className="md:hidden text-gray-700">
           <Menu className="h-6 w-6" />
         </button>
-        
-        {/* Logo for mobile */}
-        <div className="md:hidden">
-          <TelemLogo size="sm" />
-        </div>
         
         {/* Search bar */}
         <div className="hidden md:block relative w-1/3">

@@ -1,0 +1,138 @@
+
+הנחיות לתיקון בעיות במערכת תלם נדל"ן
+יש לבצע מספר תיקונים במערכת:
+1. תיקון בעיית הלוגו (2 קבצים)
+בעיה: הלוגו לא מופיע כראוי, נעלם בגלילה וקטן מדי.
+א. תיקון נתיב הלוגו
+קובץ: client/src/components/TelemLogo.tsx
+javascriptCopy// לשנות את:
+import telemLogo from '../assets/telem-logo.png';
+
+// ל:
+const telemLogo = '/telem-logo.png';
+ב. שיפור מיקום וגודל הלוגו
+קובץ: client/src/components/layout/TopNavbar.tsx
+javascriptCopy// לשנות את האזור של הלוגו והכותרת:
+return (
+  <header className="bg-white shadow-sm sticky top-0 z-10">
+    <div className="flex items-center justify-between p-4">
+      {/* הלוגו יופיע עכשיו גם בתצוגת מובייל וגם בדסקטופ */}
+      <div className="flex items-center">
+        <TelemLogo size="md" className="h-12 ml-2" /> {/* הגדלת הלוגו */}
+        {title && (
+          <div className="mr-4 text-right hidden md:block">
+            <h1 className="text-xl font-semibold">{title}</h1>
+            {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
+          </div>
+        )}
+      </div>
+      
+      {/* Mobile menu button */}
+      <button onClick={onMenuClick} className="md:hidden text-gray-700">
+        <Menu className="h-6 w-6" />
+      </button>
+      
+      {/* המשך התוכן הקיים... */}
+    </div>
+  </header>
+);
+2. תיקון בעיית יצירת מחשבון
+בעיה: חסר שדה investorName בבקשה לשרת בעת יצירת מחשבון חדש.
+קובץ: client/src/components/dialogs/calculator-dialog.tsx
+javascriptCopy// לעדכן את פונקציית handleCalcSubmit:
+
+const handleCalcSubmit = async (values: any) => {
+  try {
+    // למצוא את שם המשקיע לפי ה-ID
+    const investor = investors?.find(inv => inv.id.toString() === values.investorId.toString());
+    const investorName = investor?.name || 'משקיע';
+    
+    // להוסיף את שדה investorName לpayload
+    const payload = {
+      name: values.name,
+      userId: values.investorId,
+      investorName: investorName, // הוספת השדה החסר
+      selfEquity: values.selfEquity,
+      hasMortgage: values.hasMortgage,
+      hasPropertyInIsrael: values.hasPropertyInIsrael,
+      investmentPreference: values.investmentPreference,
+      exchangeRate: values.exchangeRate,
+      vatRate: values.vatRate,
+      status: values.status
+    };
+    
+    // המשך הקוד הקיים...
+3. תיקון בעיית זום בכל המערכת
+בעיה: התוכן מוצג בזום לא נכון בכל המערכת.
+קובץ: client/src/index.css (או ליצור קובץ חדש אם לא קיים)
+cssCopy/* להוסיף ל-CSS הראשי של האפליקציה */
+
+/* תיקון זום ראשי */
+html {
+  font-size: 16px; /* גודל בסיס תקין */
+}
+
+body {
+  zoom: 1; /* איפוס זום ברירת מחדל */
+  font-size: 1rem;
+  overflow-x: hidden; /* מניעת גלילה אופקית */
+}
+
+/* הגדרות רספונסיביות לכל הפריסה */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; /* הקטנה מתונה במובייל */
+  }
+  
+  /* תיקון פריסת קונטיינרים */
+  .container, .container-fluid, main, .card, .card-body {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+
+/* שיפור תצוגת טבלאות */
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+td, th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* תיקון פריסת טפסים */
+.form-container {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* וידוא שמדיה גדולה לא חורגת */
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+}
+קובץ: client/src/App.tsx
+הוסף meta tag לשליטה טובה יותר בסקאלינג במובייל:
+javascriptCopy// בראש הקובץ, לפני ה-return:
+import { Helmet } from "react-helmet"; // אם אינו מותקן, יש להתקין
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Helmet>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      </Helmet>
+      <AuthProvider>
+        <LocaleProvider>
+          <Router />
+          <Toaster />
+        </LocaleProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  );
+}
+אם react-helmet לא מותקן, ניתן לעדכן את הקובץ client/public/index.html ולהוסיף שם את ה-meta tag.
+יש לבצע את כל התיקונים בסדר המוצג לעיל ולהריץ מחדש את האפליקציה.

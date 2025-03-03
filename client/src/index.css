@@ -101,10 +101,14 @@
   
   html {
     font-family: 'Heebo', 'Roboto', sans-serif;
+    font-size: 16px; /* גודל בסיס תקין */
   }
   
   body {
     @apply antialiased bg-background text-foreground;
+    zoom: 1; /* איפוס זום ברירת מחדל */
+    font-size: 1rem;
+    overflow-x: hidden; /* מניעת גלילה אופקית */
   }
   
   /* For Webkit browsers */
@@ -134,4 +138,41 @@
   .ltr {
     direction: ltr;
   }
+}
+
+/* הגדרות רספונסיביות לכל הפריסה */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; /* הקטנה מתונה במובייל */
+  }
+  
+  /* תיקון פריסת קונטיינרים */
+  .container, .container-fluid, main, .card, .card-body {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+
+/* שיפור תצוגת טבלאות */
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+td, th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* תיקון פריסת טפסים */
+.form-container {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* וידוא שמדיה גדולה לא חורגת */
+img, svg, video {
+  max-width: 100%;
+  height: auto;
 }
